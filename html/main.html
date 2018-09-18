@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://refined-x.com/projects/codes/startmenu.html -->
+<html lang="zh-cn" class="">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Fake Windows10 Desktop</title>
+    <meta name="format-detection" content="telephone=no">
+
+    <style>
+        body,
+        html {
+            height: 100%;
+        }
+        
+        body {
+            background: url("https://raw.githubusercontent.com/chiwent/Win10-Desktop/master/assets/bg.jpg") center no-repeat;
+            background-size: cover;
+            overflow-y: hidden;
+        }
+        
+        .dock {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background-color: rgb(3, 42, 68);
+            z-index: 1;
+            /* background: url(dock.png) center no-repeat;
+            background-size: cover; */
+        }
+        
+        .dock-icon {
+            width: 20px;
+            height: 20px;
+            z-index: 2;
+            cursor: pointer;
+        }
+        
+        .icon2 {
+            margin-left: 20px;
+        }
+        
+        .icon-left {
+            float: left;
+        }
+        
+        .icon-right {
+            float: right;
+        }
+        
+        .icon3 {
+            margin-right: 15px;
+        }
+        
+        .clock {
+            height: 20px;
+            line-height: 20px;
+            width: 38px;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: top;
+        }
+        
+        .time {
+            height: 20px;
+            line-height: 20px;
+            color: white;
+        }
+        
+        .start-menu {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, .6);
+            max-height: 100%;
+            box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+        }
+        
+        .open {
+            width: 500px;
+            height: 540px;
+            padding: 20px;
+            display: block;
+            animation: openmenu 0.2s ease-in-out;
+        }
+        
+        .close {
+            /* display: none; */
+            width: 0;
+            height: 0;
+            animation: closemenu 0.2s ease-in;
+        }
+        
+        @keyframes openmenu {
+            0% {
+                width: 0;
+                height: 0;
+            }
+            50% {
+                width: 500px;
+                height: 270px;
+            }
+            100% {
+                width: 500px;
+                height: 540px;
+            }
+        }
+        
+        @keyframes closemenu {
+            0% {
+                width: 500px;
+                height: 540px;
+            }
+            50% {
+                width: 300px;
+                height: 400px;
+            }
+            100% {
+                width: 0px;
+                height: 0px;
+            }
+        }
+        
+        .flex-cell {
+            height: 140px;
+            transition: all ease 700ms;
+            margin: 4px;
+            text-align: center;
+        }
+        
+        .flex-cell.dragstart {
+            opacity: 0.5 !important;
+        }
+        
+        .isDraging .flex-cell {
+            opacity: .7;
+        }
+        
+        #dragshow {
+            position: absolute;
+            z-index: 99;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .flex-col {
+            overflow: hidden;
+            display: -ms-box;
+            display: -ms-flexbox;
+            display: flex;
+            flex-direction: column;
+            -ms-flex-direction: column;
+        }
+        
+        .flex-row {
+            overflow: hidden;
+            display: -ms-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: row;
+        }
+        
+        .flex-1 {
+            -ms-flex: 1;
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .justify-center {
+            -ms-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+        
+        .bg-primary {
+            color: #fff;
+            background-color: #2EA9DF;
+        }
+        
+        .bg-success {
+            color: #fff;
+            background-color: #25ae88;
+        }
+        
+        .bg-info {
+            color: #fff;
+            background-color: #4fcbf0;
+        }
+        
+        .bg-warning {
+            color: #fff;
+            background-color: #F05E1C;
+        }
+        
+        .bg-danger {
+            color: #fff;
+            background-color: #CB4042;
+        }
+    </style>
+</head>
+
+<body data-gclp-initialized="true" data-gistbox-initialized="true" cz-shortcut-listen="true">
+    <div class="dock">
+        <div class="icon-left">
+            <img class="dock-icon start" src="https://raw.githubusercontent.com/chiwent/Win10-Desktop/master/assets/windows-white.svg" alt="">
+            <img src="https://raw.githubusercontent.com/chiwent/Win10-Desktop/master/assets/cortana.png" alt="" class="dock-icon icon2">
+            <img src="https://raw.githubusercontent.com/chiwent/Win10-Desktop/master/assets/chrome.svg" alt="" class="dock-icon icon2">
+            <img src="https://raw.githubusercontent.com/chiwent/Win10-Desktop/master/assets/outlook.svg" alt="" class="dock-icon icon2">
+            <img src="https://raw.githubusercontent.com/chiwent/Win10-Desktop/master/assets/office.svg" alt="" class="dock-icon icon2">
+        </div>
+        <div class="icon-right">
+            <img src="https://raw.githubusercontent.com/chiwent/Win10-Desktop/master/assets/steam.svg" alt="" class="dock-icon icon3">
+            <img src="https://raw.githubusercontent.com/chiwent/Win10-Desktop/master/assets/usb.svg" alt="" class="dock-icon icon3">
+            <img src="https://raw.githubusercontent.com/chiwent/Win10-Desktop/master/assets/onedrive.svg" alt="" class="dock-icon icon3">
+            <img src="https://raw.githubusercontent.com/chiwent/Win10-Desktop/master/assets/battery.svg" alt="" class="dock-icon icon3">
+            <img src="https://raw.githubusercontent.com/chiwent/Win10-Desktop/master/assets/wifi.svg" alt="" class="dock-icon icon3">
+            <div class="clock dock-icon">
+                <span class="time"></span>
+            </div>
+            <img src="https://raw.githubusercontent.com/chiwent/Win10-Desktop/master/assets/message.svg" alt="" class="dock-icon icon3">
+        </div>
+    </div>
+    <div class="start-icon">
+        <div class="start-menu close" id="wrapper">
+            <div class="flex-row">
+                <div class="flex-1 flex-cell flex-col justify-center bg-primary" draggable="true">日历</div>
+                <div class="flex-1 flex-cell flex-col justify-center bg-success" draggable="true">腾讯QQ</div>
+                <div class="flex-1 flex-cell flex-col justify-center bg-success" draggable="true">应用商店</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-1 flex-cell flex-col justify-center bg-info" draggable="true">Xbox</div>
+                <div class="flex-1 flex-cell flex-col justify-center bg-warning" draggable="true">OneNote</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-1 flex-cell flex-col justify-center bg-danger" draggable="true">Chrome</div>
+                <div class="flex-1 flex-cell flex-col justify-center bg-primary" draggable="true">Microsoft Edge</div>
+                <div class="flex-1 flex-cell flex-col justify-center bg-success" draggable="true">记事本</div>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="https://cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script> -->
+    <script>
+        window.onload = function() {
+            var wrapper = document.getElementById('wrapper');
+            var dragshadow = document.createElement('div');
+            dragshadow.id = 'dragshadow';
+            document.body.appendChild(dragshadow);
+            var documentMoveInit;
+            var dragData;
+
+            function displayTime() {
+                var now = new Date();
+                var hour = now.getHours();
+                hour = hour < 10 ? "0" + hour : hour;
+                var minute = now.getMinutes();
+                minute = minute < 10 ? "0" + minute : minute;
+                document.getElementsByClassName("time")[0].innerHTML = hour + ':' + minute;
+            }
+            displayTime();
+            setInterval(displayTime, 1000);
+            var start = document.getElementsByClassName('start')[0];
+            var startFlag = 0;
+            start.addEventListener('click', function(e) {
+                if (!startFlag) {
+                    wrapper.classList.add('open');
+                    wrapper.classList.remove('close');
+                    startFlag += 1;
+                } else {
+                    wrapper.classList.add('close');
+                    wrapper.classList.remove('open');
+                    startFlag = 0;
+                }
+
+            });
+            var empty = function(element) {
+                while (element.firstChild) element.removeChild(element.firstChild);
+            }
+            var clearNode = function(ele) {
+                ele.classList.remove('dragstart');
+                documentMoveInit = null;
+                empty(dragshadow);
+                dragshadow.style.width = 0;
+                dragshadow.style.height = 0;
+                dragshadow.style.left = 0;
+                dragshadow.style.top = 0;
+                dragshadow.style.transform = '';
+            }
+
+            var flexCell = document.getElementsByClassName('flex-cell');
+            for (var i = 0; i < flexCell.length; i++) {
+                flexCell[i].id = 'wrapper-drag-cell-' + i;
+                flexCell[i].addEventListener('mousedown', function(e) {
+
+                    documentMoveInit = {
+                        left: e.pageX,
+                        top: e.pageY
+                    }
+                    dragshadow.style.width = this.offsetWidth;
+                    dragshadow.style.height = this.offsetHeight;
+                    dragshadow.style.left = this.style.left;
+                    dragshadow.style.top = this.style.top;
+                    // dragshadow.innerHTML = this.cloneNode();
+                    this.classList.add('dragstart');
+
+                }, false);
+                flexCell[i].addEventListener('dragstart', function(e) {
+                    e.dataTransfer.dropEffect = "move";
+                    dragData = this.id;
+                    e.dataTransfer.setData('text/plain', this.id);
+                    wrapper.classList.add('isDraging');
+                });
+                flexCell[i].addEventListener('dragover', function(e) {
+                    e.preventDefault();
+
+                    var step = 'translate(' + (e.pageX - documentMoveInit.left) + 'px,' + (e.pageY - documentMoveInit.top) + 'px)';
+                    dragshadow.style.transform = step;
+                    var dropData = dragData;
+                    var target = document.getElementById(dropData);
+                    var myCenter = parseInt(this.offsetLeft) + this.clientWidth / 2;
+                    if (e.pageX > myCenter) {
+                        this.parentNode.appendChild(target);
+                    } else {
+                        target.parentNode.appendChild(this);
+                    }
+                });
+                flexCell[i].addEventListener('dragend', function(e) {
+                    e.preventDefault();
+                    clearNode(this);
+                    wrapper.classList.remove('isDraging');
+                });
+                flexCell[i].addEventListener('mouseup', function(e) {
+                    clearNode(this);
+                });
+            }
+        }
+    </script>
+
+
+    <!-- <div id="dragshadow" style="position: absolute; z-index: 99; overflow: hidden; pointer-events: none; width: 0px; height: 0px; left: 0px; top: 0px;"></div> -->
+</body>
+
+</html>
